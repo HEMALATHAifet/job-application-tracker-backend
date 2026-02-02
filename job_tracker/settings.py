@@ -36,13 +36,20 @@ SECRET_KEY = 'django-insecure-%*xe3xneq@k1n@@mzgr_j$1phdbxv8qm-7x@at5r4$+2_xlsb@
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
-DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
+# DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
+DEBUG=False
 
 #ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(",")
-ALLOWED_HOSTS = os.environ.get(
-    "DJANGO_ALLOWED_HOSTS",
-    "localhost,127.0.0.1"
-).split(",")
+# ALLOWED_HOSTS = os.environ.get(
+#     "DJANGO_ALLOWED_HOSTS",
+#     "localhost,127.0.0.1"
+# ).split(",")
+ALLOWED_HOSTS = [
+    "job-application-tracker-backend-our5.onrender.com",
+    "localhost",
+    "127.0.0.1",
+]
+
 
 
 # Application definition
