@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+# SAVED ON 02 FEB 2026
 import os
 from pathlib import Path
 from datetime import timedelta
@@ -35,20 +36,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%*xe3xneq@k1n@@mzgr_j$1phdbxv8qm-7x@at5r4$+2_xlsb@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
-# DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
-DEBUG=False
+DEBUG = False
 
-#ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(",")
-# ALLOWED_HOSTS = os.environ.get(
-#     "DJANGO_ALLOWED_HOSTS",
-#     "localhost,127.0.0.1"
-# ).split(",")
-ALLOWED_HOSTS = [
-    "job-application-tracker-backend-our5.onrender.com",
-    "localhost",
-    "127.0.0.1",
-]
+ALLOWED_HOSTS = ["*"]
 
 
 
