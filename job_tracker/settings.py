@@ -140,13 +140,28 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-from django.contrib.auth import get_user_model
+# yourapp/apps.py
+from django.apps import AppConfig
 
-if os.environ.get("RENDER") == "true":
-    User = get_user_model()
-    if not User.objects.filter(username="admin").exists():
-        User.objects.create_superuser(
-            username="admin",
-            email="admin@example.com",
-            password="Admin@123"
-        )
+class YourAppConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'yourapp'
+
+    def ready(self):
+        from django.contrib.auth import get_user_model
+        from django.db.utils import OperationalError
+        import os
+
+        try:
+            User = get_user_model()
+
+            if not User.objects.filter(username="admin").exists():
+                User.objects.create_superuser(
+                    username="admin",
+                    email=os.getenv("ADMIN_EMAIL", "admin@example.com"),
+                    password=os.getenv("ADMIN_PASSWORD", "admin123")
+                )
+        except OperationalError:
+            # DB not ready yet → ignore
+            pass
+
