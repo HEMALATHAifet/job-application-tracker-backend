@@ -155,8 +155,4 @@ def reset_admin(request):
         return HttpResponse("Admin password reset")
     return HttpResponse("Admin not found")
 
-urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("reset-admin/", reset_admin),  # TEMP
-]
 
