@@ -140,28 +140,23 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# yourapp/apps.py
-from django.apps import AppConfig
+# project/urls.py
+from django.contrib import admin
+from django.urls import path
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
 
-class YourAppConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'yourapp'
+def reset_admin(request):
+    User = get_user_model()
+    user = User.objects.filter(username="admin").first()
+    if user:
+        user.set_password("Admin@123")
+        user.save()
+        return HttpResponse("Admin password reset")
+    return HttpResponse("Admin not found")
 
-    def ready(self):
-        from django.contrib.auth import get_user_model
-        from django.db.utils import OperationalError
-        import os
-
-        try:
-            User = get_user_model()
-
-            if not User.objects.filter(username="admin").exists():
-                User.objects.create_superuser(
-                    username="admin",
-                    email=os.getenv("ADMIN_EMAIL", "admin@example.com"),
-                    password=os.getenv("ADMIN_PASSWORD", "admin123")
-                )
-        except OperationalError:
-            # DB not ready yet → ignore
-            pass
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("reset-admin/", reset_admin),  # TEMP
+]
 
